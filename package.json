@@ -1,0 +1,27 @@
+{
+  "name": "us-formly-templates",
+  "version": "1.0.0",
+  "description": "Extensão com templates para usar formly com bootstrap",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juliofabiane/us-formly-templates.git"
+  },
+  "keywords": [
+    "AngularJs",
+    "form",
+    "formly",
+    "json",
+    "bootstrap",
+    "html"
+  ],
+  "author": "Undefined Source",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/juliofabiane/us-formly-templates/issues"
+  },
+  "homepage": "https://github.com/juliofabiane/us-formly-templates#readme"
+}

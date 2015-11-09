@@ -1,0 +1,19 @@
+{
+  "name": "us-formly-templates",
+  "homepage": "https://github.com/juliofabiane/us-formly-templates",
+  "description": "Extensão com templates para usar formly com bootstrap",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "AngularJs",
+    "form",
+    "formly",
+    "json",
+    "bootstrap",
+    "html"
+  ],
+  "authors": [
+    "Undefined Source"
+  ],
+  "license": "MIT"
+}
