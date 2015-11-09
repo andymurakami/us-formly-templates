@@ -1,11 +1,12 @@
-angular.module('usFormlyTemplates', ['formly', 'formlyBootstrap'])
-
+angular.module('usFormlyTemplates', [
+	'formly', 
+	'formlyBootstrap'
+])
 .run(function(formlyConfig, formlyValidationMessages) {
 	formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = 'fc.$touched || form.$submitted';
 	formlyValidationMessages.messages.required = 'to.label + " é obrigatório"';
 	formlyValidationMessages.addStringMessage('email', 'E-mail inválido');
 })
-
 .config(['formlyConfigProvider',
 	function(formlyConfigProvider) {
 
