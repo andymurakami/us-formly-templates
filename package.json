@@ -2,7 +2,6 @@
   "name": "us-formly-templates",
   "version": "1.0.0",
   "description": "Extensão com templates para usar formly com bootstrap",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +18,16 @@
     "html"
   ],
   "author": "Undefined Source",
+  "contributors": [
+    {
+      "name": "Julio Cezar Fabiane",
+      "email": "juliofabiane1@gmail.com"
+    },
+    {
+      "name": "Jhon Mike Soares",
+      "email": "developer@jhonmike.com.br"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/juliofabiane/us-formly-templates/issues"
