@@ -301,17 +301,17 @@ angular.module('usFormlyTemplates', [
 			<div class="col-md-12">
 				<div class="form-group">
 					<label>{{to.label}}</label>
-					<input type="file" id="fileInput" ng-click="handleFileSelect(this)" ng-model="model[options.key]"/>
+					<input type="file" us-file-upload="fileUpload" ng-model="model[options.key]"/>
 				</div>
 				<div class="hbox hbox-auto-xs">
 					<div class="col">
 						<div class="wrapper-sm b-a bg-white m-r-xs m-b-xs">
 							<div class="bg-light" style="height:200px">
 								<img-crop
-									image="to.myImage"
-									result-image="to.myCroppedImage"
+									image="fileUpload"
+									result-image="myCroppedImage"
 									result-image-size="160"
-									area-type="{{to.cropType}}">
+									area-type="{{cropType}}">
 								</img-crop>
 							</div>
 						</div>
@@ -319,37 +319,44 @@ angular.module('usFormlyTemplates', [
 					<div class="col">
 						<div class="inline bg-white wrapper-sm b-a">
 							<div class="bg-light">
-								<img ng-src="{{to.myCroppedImage}}" />
+								<img ng-src="{{myCroppedImage}}" />
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="btn-group m-t">
-					<label class="btn btn-default" ng-model="to.cropType" btn-radio="'circle'">Circulo</label>
-					<label class="btn btn-default" ng-model="to.cropType" btn-radio="'square'">Quadrado</label>
+					<label class="btn btn-default" ng-model="cropType" btn-radio="'circle'">Circulo</label>
+					<label class="btn btn-default" ng-model="cropType" btn-radio="'square'">Quadrado</label>
 				</div>
 			</div>`,
 			wrapper: ['bootstrapHasError'],
 			controller: ['$scope', function ($scope) {
-				$scope.to.myImage='';
-				$scope.to.myCroppedImage='';
-				$scope.to.cropType="circle";
-
-				$scope.handleFileSelect=function(evt) {
-					console.log(evt);
-					//var file=evt.currentTarget.files[0];
-					// var file = $scope.model[$scope.options.key];
-					// console.log(file);
-					// var reader = new FileReader();
-					// reader.onload = function (evt) {
-					// 	$scope.$apply(function($scope){
-					// 		$scope.to.myImage=evt.target.result;
-					// 	});
-					// };
-					// reader.readAsDataURL(file);
-				};
-				//angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+				$scope.myCroppedImage = '';
+				$scope.cropType = "circle";
 	    	}]
 		});
 	}
-]);
+])
+.directive('usFileUpload', function() {
+	return {
+		restrict: 'A',
+      	require: 'ngModel',
+      	scope: {
+        	usFileUpload: '='
+      	},
+      	link(scope, element) {
+        	element.on('change', function(e) {
+          		if (!e.target.files || !e.target.files[0]) {
+            		return;
+          		};
+				var reader = new FileReader();
+				reader.onload = function (evt) {
+					scope.$apply(function(scope) {
+						scope.usFileUpload = evt.target.result;
+					});
+				};
+				reader.readAsDataURL(e.target.files[0]);
+        	});
+    	}
+	};
+});
