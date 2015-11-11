@@ -1,5 +1,5 @@
 angular.module('usFormlyTemplates', [
-	'formly', 
+	'formly',
 	'formlyBootstrap'
 ])
 .run(function(formlyConfig, formlyValidationMessages) {
@@ -289,6 +289,66 @@ angular.module('usFormlyTemplates', [
 	    		$scope.datepicker.open = function ($event) {
 	        		$scope.datepicker.opened = true;
 	    		};
+	    	}]
+		});
+
+		//Image Upload
+		//Multi Checkbox Inline
+		formlyConfigProvider.setType({
+			name: 'imageUpload',
+			extends: 'input',
+			template: `
+			<div class="col-md-12">
+				<div class="form-group">
+					<label>{{to.label}}</label>
+					<input type="file" id="fileInput" ng-click="handleFileSelect(this)" ng-model="model[options.key]"/>
+				</div>
+				<div class="hbox hbox-auto-xs">
+					<div class="col">
+						<div class="wrapper-sm b-a bg-white m-r-xs m-b-xs">
+							<div class="bg-light" style="height:200px">
+								<img-crop
+									image="to.myImage"
+									result-image="to.myCroppedImage"
+									result-image-size="160"
+									area-type="{{to.cropType}}">
+								</img-crop>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="inline bg-white wrapper-sm b-a">
+							<div class="bg-light">
+								<img ng-src="{{to.myCroppedImage}}" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="btn-group m-t">
+					<label class="btn btn-default" ng-model="to.cropType" btn-radio="'circle'">Circulo</label>
+					<label class="btn btn-default" ng-model="to.cropType" btn-radio="'square'">Quadrado</label>
+				</div>
+			</div>`,
+			wrapper: ['bootstrapHasError'],
+			controller: ['$scope', function ($scope) {
+				$scope.to.myImage='';
+				$scope.to.myCroppedImage='';
+				$scope.to.cropType="circle";
+
+				$scope.handleFileSelect=function(evt) {
+					console.log(evt);
+					//var file=evt.currentTarget.files[0];
+					// var file = $scope.model[$scope.options.key];
+					// console.log(file);
+					// var reader = new FileReader();
+					// reader.onload = function (evt) {
+					// 	$scope.$apply(function($scope){
+					// 		$scope.to.myImage=evt.target.result;
+					// 	});
+					// };
+					// reader.readAsDataURL(file);
+				};
+				//angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
 	    	}]
 		});
 	}
