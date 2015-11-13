@@ -1,6 +1,6 @@
 {
   "name": "us-formly-templates",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Extensão com templates para usar formly com bootstrap",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
