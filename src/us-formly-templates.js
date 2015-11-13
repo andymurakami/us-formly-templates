@@ -230,6 +230,24 @@ angular.module('usFormlyTemplates', [
 			}
 		});
 
+		//Multi Checkbox
+		formlyConfigProvider.setType({
+			name: 'multiCheckboxDefault',
+			extends: 'multiCheckbox',
+			template: `
+			<div class="checkbox" ng-repeat="(key, option) in to.options">
+				<label class="i-checks">
+					<input
+						type="checkbox"
+						id="{{id + '_'+ $index}}"
+						ng-model="multiCheckbox.checked[$index]"
+						ng-change="multiCheckbox.change()">
+					<i></i>
+					{{option[to.labelProp || 'name']}}
+				</label>
+			</div>`
+		});
+
 		//Multi Checkbox Inline
 		formlyConfigProvider.setType({
 			name: 'multiCheckboxInline',
@@ -247,6 +265,7 @@ angular.module('usFormlyTemplates', [
 		    	</label>
 			</div>`
 		});
+
 
 		//Datepicker
 		formlyConfigProvider.setType({
