@@ -25,7 +25,7 @@ angular.module('usFormlyTemplates', [
 		formlyConfigProvider.setType({
     		name: 'maskedInput',
     		extends: 'input',
-    		template: '<input class="form-control" ng-model="model[options.key]" />',
+    		template: '<input class="form-control" model-view-value="true" ng-model="model[options.key]" />',
     		defaultOptions: {
 				ngModelAttrs: {
         			mask: {
@@ -48,9 +48,10 @@ angular.module('usFormlyTemplates', [
     		defaultOptions: {
 				validators: {
 		        	cpf: {
-		            	expression: function(viewValue, modelValue) {
+		            	expression: function(viewValue, modelValue, scope) {
 							var cpf = modelValue || viewValue;
 							if(cpf){
+        						cpf = cpf.replace(/\.|\-/g, '');
 								if (cpf.length != 11 ||
 								cpf == "00000000000" ||
 								cpf == "11111111111" ||
@@ -83,7 +84,9 @@ angular.module('usFormlyTemplates', [
 						            return false;
 
 						        return true;
-							}
+							} else if (!scope.to.required) {
+        						return true;
+    						}
 							return false;
 		            	},
 		            	message: '"CPF inválido"'
@@ -98,10 +101,11 @@ angular.module('usFormlyTemplates', [
 		//RG
 		formlyConfigProvider.setType({
     		name: 'rg',
-    		extends: 'maskedInput',
+    		//extends: 'maskedInput',
+			extends: 'input',
     		defaultOptions: {
         		templateOptions: {
-        			mask: '99.999.999-9',
+        			//mask: '99.999.999-9',
     			}
     		}
     	});
@@ -113,9 +117,10 @@ angular.module('usFormlyTemplates', [
     		defaultOptions: {
 				validators: {
 		        	cnpj: {
-		            	expression: function(viewValue, modelValue) {
+		            	expression: function(viewValue, modelValue, scope) {
 							var cnpj = modelValue || viewValue;
 							if(cnpj){
+								cnpj = cnpj.replace(/[^\d]+/g,'');
 							    if (cnpj == "00000000000000" ||
 						        cnpj == "11111111111111" ||
 						        cnpj == "22222222222222" ||
@@ -156,7 +161,9 @@ angular.module('usFormlyTemplates', [
 							        return false;
 
 							    return true;
-							}
+							} else if (!scope.to.required) {
+        						return true;
+    						}
 							return false;
 		            	},
 		            	message: '"CNPJ inválido"'
@@ -298,8 +305,6 @@ angular.module('usFormlyTemplates', [
 			<p class="input-group">
 			<input
 				type="text"
-				id="{{::id}}"
-				name="{{::id}}"
 				ng-model="model[options.key]"
 				class="form-control"
 				ng-click="datepicker.open($event)"
@@ -319,8 +324,8 @@ angular.module('usFormlyTemplates', [
 	    	defaultOptions: {
 	    		templateOptions: {
 	        		datepickerOptions: {
-	        			format: 'dd.MM.yyyy',
-	        			initDate: new Date()
+	        			format: 'dd/MM/yyyy',
+						initDate: new Date()
 	        		}
 	    		}
 	    	},
@@ -332,6 +337,13 @@ angular.module('usFormlyTemplates', [
 	    		$scope.datepicker.open = function ($event) {
 	        		$scope.datepicker.opened = true;
 	    		};
+
+				// carregamento com abas
+				$scope.$watch('model.'+$scope.options.key, function(value) {
+					if (typeof ($scope.model[$scope.options.key]) == 'string') {
+						$scope.model[$scope.options.key] = new Date($scope.model[$scope.options.key]);
+					}
+				});
 	    	}]
 		});
 
