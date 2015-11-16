@@ -281,8 +281,6 @@ angular.module('usFormlyTemplates', [
 			<p class="input-group">
 			<input
 				type="text"
-				id="{{::id}}"
-				name="{{::id}}"
 				ng-model="model[options.key]"
 				class="form-control"
 				ng-click="datepicker.open($event)"
@@ -302,12 +300,12 @@ angular.module('usFormlyTemplates', [
 	    	defaultOptions: {
 	    		templateOptions: {
 	        		datepickerOptions: {
-	        			format: 'dd.MM.yyyy',
-	        			initDate: new Date()
+	        			format: 'dd/MM/yyyy',
+						initDate: new Date()
 	        		}
 	    		}
 	    	},
-	    	controller: ['$scope', function ($scope) {
+	    	controller: ['$scope', function ($scope) {				
 	    		$scope.datepicker = {};
 
 	    		$scope.datepicker.opened = false;
@@ -315,6 +313,13 @@ angular.module('usFormlyTemplates', [
 	    		$scope.datepicker.open = function ($event) {
 	        		$scope.datepicker.opened = true;
 	    		};
+				
+				// carregamento com abas
+				$scope.$watch('model.'+$scope.options.key, function(value) {
+					if (typeof ($scope.model[$scope.options.key]) == 'string') {
+						$scope.model[$scope.options.key] = new Date($scope.model[$scope.options.key]);
+					}
+				});
 	    	}]
 		});
 
