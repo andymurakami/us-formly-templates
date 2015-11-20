@@ -13,7 +13,7 @@ angular.module('usFormlyTemplates', [
 		//Validação
 		formlyConfigProvider.setWrapper({
     		name: 'validation',
-    		types: ['input', 'maskedInput', 'cpf', 'rg', 'cnpj'],
+    		types: ['input', 'maskedInput', 'cpf', 'rg', 'cnpj', 'number', 'fone', 'percent'],
     		template: `
 			<formly-transclude></formly-transclude>
 			<div ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched" class="error-messages">
@@ -101,11 +101,10 @@ angular.module('usFormlyTemplates', [
 		//RG
 		formlyConfigProvider.setType({
     		name: 'rg',
-    		//extends: 'maskedInput',
-			extends: 'input',
+    		extends: 'maskedInput',
     		defaultOptions: {
         		templateOptions: {
-        			//mask: '99.999.999-9',
+        			mask: '99.999.999-9',
     			}
     		}
     	});
@@ -211,6 +210,31 @@ angular.module('usFormlyTemplates', [
 			</label>`
 		});
 
+
+		//Radio
+		formlyConfigProvider.setType({
+			name: 'radioDefault',
+			extends: 'radio',
+			template: `
+			<div class="checkbox" ng-repeat="(key, option) in to.options">
+				<label class="i-checks">
+					<input
+						type="radio"
+						id="{{id + '_'+ $index}}"
+						tabindex="0"
+						ng-value="option[to.valueProp || 'value']"
+						ng-model="model[options.key]">
+					<i></i>{{option[to.labelProp || 'name']}}
+				</label>
+			</div>`,
+			controller: function($scope){
+				// console.log($scope.model[$scope.options.key]);
+				if (!$scope.model[$scope.options.key]) {
+					$scope.model[$scope.options.key] = $scope.to.checked;
+				}
+			}
+		});
+
 		//Radio Inline
 		formlyConfigProvider.setType({
 			name: 'radioInline',
@@ -272,17 +296,32 @@ angular.module('usFormlyTemplates', [
 			</div>`
 		});
 
+		formlyConfigProvider.setType({
+			name: 'percent',
+			extends: 'input',
+			template: `
+			<input
+				ui-jq="TouchSpin"
+				ng-model="model[options.key]"
+				type="text"
+				class="form-control"
+				data-min='0'
+				data-step="0.1"
+				data-decimals="2"
+				data-postfix="%">`
+		});
+
 		// Select2
 		formlyConfigProvider.setType({
 			name: 'select2',
 			extends: 'select',
 			template: `
-			<ui-select ng-model="model[options.key]" required="{{to.required}}" ng-disabled="to.disabled" theme="bootstrap">
+			<ui-select ng-model="model[options.key]" required="{{to.required}}" ng-disabled="{{to.disabled}}" theme="bootstrap">
         		<ui-select-match placeholder="{{to.placeholder}}" allow-clear="true">{{$select.selected[to.labelProp]}}</ui-select-match>
         		<ui-select-choices repeat="option[to.valueProp] as option in to.options | filter: $select.search">
-          			<div ng-bind-html="option[to.labelProp] | highlight: $select.search"></div>
+        			<div ng-bind-html="option[to.labelProp] | highlight: $select.search"></div>
         		</ui-select-choices>
-      		</ui-select>`
+    		</ui-select>`
 		});
 
 		// MultiSelect2
