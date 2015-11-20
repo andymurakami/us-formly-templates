@@ -13,7 +13,7 @@ angular.module('usFormlyTemplates', [
 		//Validação
 		formlyConfigProvider.setWrapper({
     		name: 'validation',
-    		types: ['input', 'maskedInput', 'cpf', 'rg', 'cnpj', 'number', 'fone', 'percent'],
+    		types: ['input', 'maskedInput', 'cpf', 'rg', 'cnpj', 'number', 'fone', 'percent', 'textarea'],
     		template: `
 			<formly-transclude></formly-transclude>
 			<div ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched" class="error-messages">
