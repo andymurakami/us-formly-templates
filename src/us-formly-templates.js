@@ -316,7 +316,7 @@ angular.module('usFormlyTemplates', [
 			name: 'select2',
 			extends: 'select',
 			template: `
-			<ui-select ng-model="model[options.key]" required="{{to.required}}" ng-disabled="{{to.disabled}}" theme="bootstrap">
+			<ui-select ng-model="model[options.key]" required="{{to.required}}" ng-disabled="to.disabled" theme="bootstrap">
         		<ui-select-match placeholder="{{to.placeholder}}" allow-clear="true">{{$select.selected[to.labelProp]}}</ui-select-match>
         		<ui-select-choices repeat="option[to.valueProp] as option in to.options | filter: $select.search">
         			<div ng-bind-html="option[to.labelProp] | highlight: $select.search"></div>
