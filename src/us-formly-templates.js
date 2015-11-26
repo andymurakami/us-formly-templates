@@ -272,8 +272,8 @@ angular.module('usFormlyTemplates', [
 						id="{{id + '_'+ $index}}"
 						ng-model="multiCheckbox.checked[$index]"
 						ng-change="multiCheckbox.change()"
-						ng-true-value="{{to.trueValue || '1'}}"
-       					ng-false-value="{{to.falseValue || '0'}}">
+						ng-true-value="'{{to.trueValue || 1}}'"
+       					ng-false-value="'{{to.falseValue || 0}}'">
 					<i></i>
 					{{option[to.labelProp || 'name']}}
 				</label>
@@ -292,8 +292,8 @@ angular.module('usFormlyTemplates', [
 		            	id="{{id + '_'+ $index}}"
 		            	ng-model="multiCheckbox.checked[$index]"
 		            	ng-change="multiCheckbox.change()"
-						ng-true-value="{{to.trueValue || '1'}}"
-       					ng-false-value="{{to.falseValue || '0'}}">
+						ng-true-value="'{{to.trueValue || 1}}'"
+       					ng-false-value="'{{to.falseValue || 0}}'">
 					<i></i>
 		    		{{option[to.labelProp || 'name']}}
 		    	</label>
