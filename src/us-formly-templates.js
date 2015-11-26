@@ -300,7 +300,7 @@ angular.module('usFormlyTemplates', [
 			</div>`
 		});
 
-		//Multi Checkbox Inline
+		//Checkbox
 		formlyConfigProvider.setType({
 			name: 'usCheckbox',
 			extends: 'checkbox',
@@ -312,14 +312,21 @@ angular.module('usFormlyTemplates', [
 						class="formly-field-checkbox"
 						ng-model="model[options.key]"
 						ng-true-value="'{{to.trueValue || 1}}'"
-       					ng-false-value="'{{to.falseValue || 0}}'">
+    					ng-false-value="'{{to.falseValue || 0}}'"
+						ng-checked="model[options.key]">
 					<i></i>
 					{{to.label}}
 					{{to.required ? '*' : ''}}
             	</label>
-            </div>`
+            </div>`,
+			controller: ['$scope', function ($scope) {
+    			if (!$scope.model[$scope.options.key]) {
+    				$scope.model[$scope.options.key] = ($scope.to.falseValue) ? $scope.to.falseValue : 0;
+    			}
+			}]
 		});
 
+		//Percent
 		formlyConfigProvider.setType({
 			name: 'percent',
 			extends: 'input',
