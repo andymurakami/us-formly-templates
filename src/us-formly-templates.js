@@ -15,7 +15,7 @@ angular.module('usFormlyTemplates', [
 		//Validação
 		formlyConfigProvider.setWrapper({
     		name: 'validation',
-    		types: ['input', 'maskedInput', 'cpf', 'rg', 'cnpj', 'number', 'maxlength', 'fone', 'percent', 'decimal', 'textarea'],
+    		types: ['input', 'maskedInput', 'cpf', 'rg', 'cnpj', 'number', 'maxlength', 'fone', 'decimal', 'textarea'],
     		template: `
 			<formly-transclude></formly-transclude>
 			<div ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched" class="error-messages">
@@ -328,23 +328,7 @@ angular.module('usFormlyTemplates', [
     				$scope.model[$scope.options.key] = ($scope.to.falseValue) ? $scope.to.falseValue : 0;
     			}
 			}]
-		});
-
-		//Percent
-		formlyConfigProvider.setType({
-			name: 'percent',
-			extends: 'input',
-			template: `
-			<input
-				ui-jq="TouchSpin"
-				ng-model="model[options.key]"
-				type="text"
-				class="form-control"
-				data-min='0'
-				data-step="0.1"
-				data-decimals="2"
-				data-postfix="%">`
-		});
+		});		
 		
 		//Decimal
 		formlyConfigProvider.setType({
