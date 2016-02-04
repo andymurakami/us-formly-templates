@@ -6,6 +6,8 @@ angular.module('usFormlyTemplates', [
 	formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = 'fc.$touched || form.$submitted';
 	formlyValidationMessages.messages.required = 'to.label + " é obrigatório"';
 	formlyValidationMessages.addStringMessage('email', 'E-mail inválido');
+	formlyValidationMessages.addStringMessage('number', 'Apenas números');
+	formlyValidationMessages.addStringMessage('maxlength', 'Ultrapassou o limite de caracteres');
 })
 .config(['formlyConfigProvider',
 	function(formlyConfigProvider) {
@@ -13,7 +15,7 @@ angular.module('usFormlyTemplates', [
 		//Validação
 		formlyConfigProvider.setWrapper({
     		name: 'validation',
-    		types: ['input', 'maskedInput', 'cpf', 'rg', 'cnpj', 'number', 'fone', 'percent', 'textarea'],
+    		types: ['input', 'maskedInput', 'cpf', 'rg', 'cnpj', 'number', 'maxlength', 'fone', 'percent', 'decimal', 'textarea'],
     		template: `
 			<formly-transclude></formly-transclude>
 			<div ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched" class="error-messages">
@@ -101,10 +103,12 @@ angular.module('usFormlyTemplates', [
 		//RG
 		formlyConfigProvider.setType({
     		name: 'rg',
-    		extends: 'maskedInput',
+    		//extends: 'maskedInput',
+    		extends: 'input',
     		defaultOptions: {
-        		templateOptions: {
-        			mask: '99.999.999-9',
+       			templateOptions: {
+       				//mask: '99.999.999-9',
+       				maxlength: 18
     			}
     		}
     	});
@@ -180,7 +184,7 @@ angular.module('usFormlyTemplates', [
     		extends: 'maskedInput',
     		defaultOptions: {
         		templateOptions: {
-        			mask: '99.999-999'
+        			mask: '99999-999'
     			}
     		}
     	});
@@ -341,6 +345,22 @@ angular.module('usFormlyTemplates', [
 				data-decimals="2"
 				data-postfix="%">`
 		});
+		
+		//Decimal
+		formlyConfigProvider.setType({
+			name: 'decimal',
+			extends: 'input',
+			template: `
+			<input
+				ng-model="model[options.key]"
+				type="number"
+				class="form-control"
+				ng-pattern="{{to.pattern || '/^[0-9]+(\.[0-9]{1,2})?$/'}}"
+				data-step="{{to.step || 0.01}}"
+				data-decimals="{{to.decimals || 2}}"
+				data-postfix="{{to.step || ''}}"
+				required="{{to.required || false}}">`
+		});
 
 		// Select2
 		formlyConfigProvider.setType({
@@ -368,6 +388,19 @@ angular.module('usFormlyTemplates', [
       		</ui-select>`
 		});
 
+		//Typeahead
+		formlyConfigProvider.setType({
+			name: 'typeahead',			
+			template: `
+				<input 
+				type="text" 
+				ng-model="model[options.key]" 
+				typeahead="item for item in to.options | filter:$viewValue | limitTo:8" 
+				class="form-control"
+				autocomplete="off">`,
+			wrapper: ['bootstrapLabel', 'bootstrapHasError']
+		});
+
 		//Datepicker
 		formlyConfigProvider.setType({
 	    	name: 'datepicker',
@@ -378,30 +411,30 @@ angular.module('usFormlyTemplates', [
 				ng-model="model[options.key]"
 				class="form-control"
 				ng-click="datepicker.open($event)"
+				ng-disabled="to.disabled"
 				datepicker-popup="{{to.datepickerOptions.format}}"
 				is-open="datepicker.opened"
 				datepicker-options="to.datepickerOptions" />
 				<span class="input-group-btn">
 					<button
 						type="button"
-						class="btn btn-default"
-						ng-click="datepicker.open($event)">
+						class="btn btn-default btn-sm"
+						ng-click="datepicker.open($event)"
+						ng-disabled="to.disabled">
 						<i class="glyphicon glyphicon-calendar"></i>
 					</button>
 				</span>
 			</p>`,
 	    	wrapper: ['bootstrapLabel', 'bootstrapHasError'],
-	    	defaultOptions: {
+	    	defaultOptions: {	    		
 	    		templateOptions: {
 	        		datepickerOptions: {
-	        			format: 'dd/MM/yyyy',
-						initDate: new Date()
+	        			format: 'dd/MM/yyyy'	        			
 	        		}
 	    		}
 	    	},
 	    	controller: ['$scope', function ($scope) {
-	    		$scope.datepicker = {};
-
+	    		$scope.datepicker = {};	    			    	
 	    		$scope.datepicker.opened = false;
 
 	    		$scope.datepicker.open = function ($event) {
