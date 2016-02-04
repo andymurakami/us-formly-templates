@@ -356,9 +356,9 @@ angular.module('usFormlyTemplates', [
 				type="number"
 				class="form-control"
 				ng-pattern="{{to.pattern || '/^[0-9]+(\.[0-9]{1,2})?$/'}}"
-				data-step="{{to.step || 0.01}}"
-				data-decimals="{{to.decimals || 2}}"
-				data-postfix="{{to.step || ''}}"
+				step="{{to.step || 0.01}}"
+				decimals="{{to.decimals || 2}}"
+				postfix="{{to.step || ''}}"
 				required="{{to.required || false}}">`
 		});
 
