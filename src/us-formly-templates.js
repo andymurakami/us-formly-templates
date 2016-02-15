@@ -351,12 +351,12 @@ angular.module('usFormlyTemplates', [
 			name: 'select2',
 			extends: 'select',
 			template: `
-			<ui-select ng-model="model[options.key]" required="{{to.required}}" ng-disabled="to.disabled" theme="bootstrap">
-        		<ui-select-match placeholder="{{to.placeholder}}" allow-clear="true">{{$select.selected[to.labelProp]}}</ui-select-match>
-        		<ui-select-choices repeat="option[to.valueProp] as option in to.options | filter: $select.search">
-        			<div ng-bind-html="option[to.labelProp] | highlight: $select.search"></div>
-        		</ui-select-choices>
-    		</ui-select>`
+			<ui-select data-ng-model="model[options.key]" data-required="{{to.required}}" data-disabled="{{to.disabled}}" theme="bootstrap">
+		        <ui-select-match class="ui-select-match" placeholder="{{to.placeholder}}" data-allow-clear="true">{{$select.selected[to.labelProp]}}</ui-select-match>
+		        <ui-select-choices class="ui-select-choices" data-repeat="{{to.ngOptions}}">
+		        	<div ng-bind-html="option[to.labelProp] | highlight: $select.search"></div>
+		        </ui-select-choices>
+	        </ui-select>`
 		});
 
 		// MultiSelect2
@@ -364,12 +364,12 @@ angular.module('usFormlyTemplates', [
 			name: 'multiselect2',
 			extends: 'select',
 			template: `
-			<ui-select multiple ng-model="model[options.key]" required="{{to.required}}" ng-disabled="to.disabled" theme="bootstrap">
-        		<ui-select-match placeholder="{{to.placeholder}}">{{$item[to.labelProp]}}</ui-select-match>
-        		<ui-select-choices repeat="option[to.valueProp] as option in to.options | filter: $select.search">
-          			<div ng-bind-html="option[to.labelProp] | highlight: $select.search"></div>
-        		</ui-select-choices>
-      		</ui-select>`
+			<ui-select multiple data-ng-model="model[options.key]" data-required="{{to.required}}" data-disabled="{{to.disabled}}" theme="bootstrap">
+		        <ui-select-match class="ui-select-match" placeholder="{{to.placeholder}}">{{$item[to.labelProp]}}</ui-select-match>
+		        <ui-select-choices class="ui-select-choices" data-repeat="{{to.ngOptions}}">
+		          	<div ng-bind-html="option[to.labelProp] | highlight: $select.search"></div>
+		        </ui-select-choices>
+		    </ui-select>`
 		});
 
 		//Typeahead
@@ -379,7 +379,7 @@ angular.module('usFormlyTemplates', [
 				<input 
 				type="text" 
 				ng-model="model[options.key]" 
-				typeahead="item for item in to.options | filter:$viewValue | limitTo:8" 
+				uib-typeahead="item for item in to.options | filter:$viewValue | limitTo:8" 
 				class="form-control"
 				autocomplete="off">`,
 			wrapper: ['bootstrapLabel', 'bootstrapHasError']
@@ -396,8 +396,10 @@ angular.module('usFormlyTemplates', [
 				class="form-control"
 				ng-click="datepicker.open($event)"
 				ng-disabled="to.disabled"
-				datepicker-popup="{{to.datepickerOptions.format}}"
+				uib-datepicker-popup="{{to.datepickerOptions.format}}"
 				is-open="datepicker.opened"
+				min-date="to.minDate || null"
+				max-date="to.maxDate || null"
 				datepicker-options="to.datepickerOptions" />
 				<span class="input-group-btn">
 					<button
