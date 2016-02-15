@@ -5,9 +5,9 @@ angular.module('usFormlyTemplates', [
 .run(function(formlyConfig, formlyValidationMessages) {
 	formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = 'fc.$touched || form.$submitted';
 	formlyValidationMessages.messages.required = 'to.label + " é obrigatório"';
+	formlyValidationMessages.messages.maxlength = '"Máximo de " + to.maxlength + " caracteres"';
 	formlyValidationMessages.addStringMessage('email', 'E-mail inválido');
 	formlyValidationMessages.addStringMessage('number', 'Apenas números');
-	formlyValidationMessages.addStringMessage('maxlength', 'Ultrapassou o limite de caracteres');
 })
 .config(['formlyConfigProvider',
 	function(formlyConfigProvider) {
