@@ -342,8 +342,7 @@ angular.module('usFormlyTemplates', [
 				ng-pattern="{{to.pattern || '/^[0-9]+(\.[0-9]{1,2})?$/'}}"
 				step="{{to.step || 0.01}}"
 				decimals="{{to.decimals || 2}}"
-				postfix="{{to.step || ''}}"
-				required="{{to.required || false}}">`
+				postfix="{{to.step || ''}}">`
 		});
 
 		// Select2
